@@ -14,7 +14,7 @@ function [ w wSum gSum ] = batchGradient( w,h,y, epsilon, learningRate, lamda )
 
         w = w+learningRate*gradient - 2*lamda*w;
         
-        if gSum(i) < epsilon
+        if abs(gSum(i)) < epsilon
             flag = 0;
         end
     end
