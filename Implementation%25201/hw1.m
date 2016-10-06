@@ -97,6 +97,8 @@ figure
     grid on
 %% for batch testing
 
+errBatch = zeros( size(la) );
+
 for i=1:10
     
     lb = 10*(i-1)+1;
@@ -106,19 +108,23 @@ for i=1:10
     ys = vertcat(y(1:lb,:),y(ub:end,:));
     hs = horzcat(h(:,1:lb),h(:,ub:end));
     
-    [ws wSums gSums] = batchGradient(ws,hs,ys,epsilon, learningRate, lamda);
+    for j=1:length(la)
     
-    yt = y(lb:ub,:);
-    ht = h(:,lb:ub);
+        [ws wSums gSums] = batchGradient(ws,hs,ys,epsilon, learningRate, la(j));
     
-    errBatch(i) = batchTest(ws,ht,yt);
+        yt = y(lb:ub,:);
+        ht = h(:,lb:ub);
+    
+        errBatch(j) = errBatch(j) + batchTest(ws,ht,yt)/10; % normalized because 10 validation sets
+    end
 end
 
 figure
-plot(errBatch)
-ylabel('SSE')
-xlabel('Validation Sample')
-grid on
+    semilogx(la, errBatch)
+    title('Cross Validation')
+    ylabel('SSE')
+    xlabel('Lamda')
+    grid on
 
 
 %% this was for developing and testing purposes, ignore for main project
