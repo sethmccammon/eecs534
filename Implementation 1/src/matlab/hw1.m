@@ -4,8 +4,8 @@ close all
 clear
 clc
 
-train = csvread('eecs534/Implementation 1/data/train p1-16.csv');
-test = csvread('eecs534/Implementation 1/data/test p1-16.csv');
+train = csvread('../Implementation 1/data/train p1-16.csv');
+test = csvread('../Implementation 1/data/test p1-16.csv');
 
 nTrials = 100;
 nPts = 45;
@@ -25,7 +25,7 @@ learningRate = 0.5;
 epsilon = 0.01;
 
 
-%% varrying the learning rate
+%% varying the learning rate
 lR = [0, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1];%, 1.1, 1.2, 1.3];
 clear lR
 lR = [0:0.001:1];
@@ -121,7 +121,7 @@ end
 
 figure
     semilogx(la, errBatch)
-    title('Cross Validation')
+    %title('Cross Validation')
     ylabel('SSE')
     xlabel('Lamda')
     grid on
