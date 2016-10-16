@@ -29,9 +29,9 @@ def BernoulliModel(tweets, dictionary):
 
   for tweet in tweets:
     for word in tweet.tokens:
-      if(word in dict_hillary):
+      if tweet.label == 1:
         dict_hillary[word]+=1.
-      if(word in dict_donny):
+      else:
         dict_donny[word]+=1.
 
 
@@ -53,7 +53,7 @@ def BernoulliPredict(tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_d
   res=[]
   for count, tweet in enumerate(tweets): 
     if(count%500==0):
-      print count
+      print "Count:", count
     # print count
     # compute the probably of the tweet given hillary
     keys=dictionary.keys()
@@ -66,14 +66,21 @@ def BernoulliPredict(tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_d
 
     sum_logs_donald=0
     for ii,word in enumerate(keys):
-      print word, dictionaryLookup(word, probs_donny), x[ii]
-
-
-
+      #print word, dictionaryLookup(word, probs_donny), x[ii]
       sum_logs_donald+=math.log((dictionaryLookup(word,probs_donny)**x[ii])*(1-dictionaryLookup(word,probs_donny))**(1-x[ii]))
 
-    if((p_hillary*sum_logs_hillary)>(p_donald*sum_logs_donald)):
-      res.append(1)
-    else:
+      #Current Issue where this fails if the word appears in all but 1 tweet. 
+      #Basically probs_donny[word] = 1, and x[ii] = 0 for one tweet, resulting in trying to take a log of 0, which fails
+      #Not sure what the fix for this is, and maybe it disappears if we increase the number of tweets (I've been doing tests with the first 10)
+
+
+    #print "Tweet:", count, " - ", sum_logs_hillary + math.log(p_hillary), sum_logs_donald + math.log(p_donald)
+
+    if (sum_logs_hillary + math.log(p_hillary)) > (sum_logs_donald + math.log(p_donald)):
+      #print "MAKE AMERICA GREAT"
       res.append(0)
+    else:
+      #print "I STAND WITH HER"
+      res.append(1)
+
   return res
