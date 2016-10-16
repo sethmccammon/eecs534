@@ -1,7 +1,7 @@
 from utils import dictionaryLookup
 import math
 
-def BernoulliModel(tweets, dictionary,alpha=1.):
+def MultinomialModel(tweets, dictionary):
   #first we need to compute the probability of Hillary
   num_tweets=0.
   num_clinton=0.
@@ -17,18 +17,18 @@ def BernoulliModel(tweets, dictionary,alpha=1.):
 
   #donald=1-hillary
   p_donald=1.-p_hillary
-  # print p_donald, p_hillary
+  print p_donald, p_hillary
   #next we need to learn a bernoulli model for each class using the words as features
   dict_hillary={}
   dict_donny={}
 
-  for word in dictionary: #initialize dictionary with prior
-    dict_hillary[word]=alpha
-    dict_donny[word]=alpha
+  for word in dictionary: #initialize dictionary
+    dict_hillary[word]=1.
+    dict_donny[word]=1.
 
 
   for tweet in tweets:
-    for word in list(set(tweet.tokens)):
+    for word in tweet.tokens:
       if tweet.label == 1:
         dict_hillary[word]+=1.
       else:
@@ -49,7 +49,7 @@ def BernoulliModel(tweets, dictionary,alpha=1.):
 
   return probs_donny, probs_hillary, p_hillary,p_donald
 
-def BernoulliPredict(tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_donald):
+def MultinomialPredict(tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_donald):
   res=[]
   for count, tweet in enumerate(tweets):
     if(count%500==0):
@@ -57,18 +57,24 @@ def BernoulliPredict(tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_d
     # print count
     # compute the probably of the tweet given hillary
     keys=dictionary.keys()
-    x=[1 if word in list(set(tweet.tokens)) else 0 for word in keys]
+    x=[0. for word in keys]
+    for word in tweet.tokens:
+      try:
+        x[keys.index(word)]+=1.
+        # if(x[keys.index(word)]>1):
+          # print "somethin'"
 
+      except ValueError:
+        pass
     sum_logs_hillary=0
     for ii,word in enumerate(keys):
       # print dictionaryLookup(word,probs_hillary), word
-      sum_logs_hillary+=math.log((dictionaryLookup(word,probs_hillary)**x[ii])*(1-dictionaryLookup(word,probs_hillary))**(1-x[ii]))
+      sum_logs_hillary+=math.log(dictionaryLookup(word,probs_hillary)**x[ii])
 
     sum_logs_donald=0
     for ii,word in enumerate(keys):
       #print word, dictionaryLookup(word, probs_donny), x[ii]
-      sum_logs_donald+=math.log((dictionaryLookup(word,probs_donny)**x[ii])*(1-dictionaryLookup(word,probs_donny))**(1-x[ii]))
-
+      sum_logs_donald+=math.log(dictionaryLookup(word,probs_donny)**x[ii])
 
       #######################################
       ##Currently An Issue 10/16/16 1:00AM
@@ -89,7 +95,7 @@ def BernoulliPredict(tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_d
 
   return res
 
-def BernoulliTest(predicted_labels,tweets):
+def MultinomialTest(predicted_labels,tweets):
   count=0.
   # print len(predicted_labels)
   for i in range(len(predicted_labels)):

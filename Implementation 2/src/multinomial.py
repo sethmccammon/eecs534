@@ -1,7 +1,7 @@
 from utils import dictionaryLookup
 import math
 
-def MultinomialModel(tweets, dictionary):
+def MultinomialModel(tweets, dictionary,alpha=1.):
   #first we need to compute the probability of Hillary
   num_tweets=0.
   num_clinton=0.
@@ -17,14 +17,14 @@ def MultinomialModel(tweets, dictionary):
 
   #donald=1-hillary
   p_donald=1.-p_hillary
-  print p_donald, p_hillary
+  # print p_donald, p_hillary
   #next we need to learn a bernoulli model for each class using the words as features
   dict_hillary={}
   dict_donny={}
 
-  for word in dictionary: #initialize dictionary
-    dict_hillary[word]=1.
-    dict_donny[word]=1.
+  for word in dictionary: #initialize dictionary with prior
+    dict_hillary[word]=alpha
+    dict_donny[word]=alpha
 
 
   for tweet in tweets:
