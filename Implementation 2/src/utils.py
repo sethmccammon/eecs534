@@ -10,3 +10,10 @@ def cleanTokens(tokens):
       res.append(item.lower())
 
   return res
+
+
+def dictionaryLookup(key, d):
+  try:
+    return d[key]
+  except LookupError:
+    return 0
