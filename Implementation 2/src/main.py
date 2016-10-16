@@ -4,6 +4,7 @@ from utils import dictionaryLookup
 from bernoulli import BernoulliModel, BernoulliPredict, BernoulliTest
 from multinomial import MultinomialModel, MultinomialPredict, MultinomialTest
 from plotVaryingPrior import plotPriors
+from reduceFeatures import reduceFeatures
 
 def main():
   # file_class = "train"
@@ -36,7 +37,11 @@ def main():
   # test_tweets,test_dictionary=parseTweets(file_class)
   # test_prediction = MultinomialPredict(test_tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_donald)
   # print "Test accuracy: ", MultinomialTest(test_prediction,test_tweets)
-  plotPriors()
+
+  # plotPriors()
+  
+  reduceFeatures()
+
 
 
 
