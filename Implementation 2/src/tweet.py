@@ -11,5 +11,5 @@ class tweet(object):
 
     text_no_punctuation = raw_text.translate(string.maketrans("",""), string.punctuation)
     raw_tokens = nltk.word_tokenize(text_no_punctuation)
-    self.tokens = list(set(cleanTokens(raw_tokens)))
+    self.tokens = cleanTokens(raw_tokens)
     
