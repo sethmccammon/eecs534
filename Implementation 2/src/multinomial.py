@@ -90,8 +90,15 @@ def MultinomialPredict(tweets,dictionary,probs_donny, probs_hillary, p_hillary,p
 
 def MultinomialTest(predicted_labels,tweets):
   count=0.
+  confusion_mat = [[0,0],[0,0]]
   # print len(predicted_labels)
   for i in range(len(predicted_labels)):
     if (predicted_labels[i]==tweets[i].label):
       count+=1.
+    
+    confusion_mat[predicted_labels[i]][tweets[i].label] += 1
+
+
+  print "Multinomial Confusion Matrix"
+  print confusion_mat
   return float(count)/float(len(predicted_labels))*100.

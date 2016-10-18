@@ -34,19 +34,31 @@ def reduceFeatures():
     num_words.append(len(reduced_dictionary))
 
   plt.plot(range(0,16),accuracies)
-  plt.xlabel('Threshold as a varying multiplier')
-  plt.ylabel('Accuracy as a percentage')
-  plt.title('Varying threshold vs. accuracy')
+  plt.xlabel('Likelihood Threshold')
+  plt.ylabel('% Accuracy')
+  plt.title('Feature Reduction Accuracy')
   plt.show()
 
   plt.plot(range(0,16),num_words)
-  plt.xlabel('Threshold as a varying multiplier')
+  plt.xlabel('Likelihood Threshold')
   plt.ylabel('Number of words')
-  plt.title('Varying threshold vs. number of words')
+  plt.title('Feature Reduction Dictionary Size')
   plt.show()
 
   
 
+def getMostInformativeWords(probs_hillary, probs_donny, dictionary):
+  ratios = []
+  for word in dictionary:
+    ratio = probs_donny[word]/probs_hillary[word]
+    ratios.append([ratio, word])
+
+  sorted_ratios = sorted(ratios, key=lambda l: l[0])
+  print "Donald Most Informative"
+  print sorted_ratios[0:10]
+  sorted_ratios = sorted_ratios[::-1]
+  print "Hillary Most Informative"
+  print sorted_ratios[0:10]
 
 
 def reduceModel(probs_hillary,probs_donny,dictionary,thresh=0.):
