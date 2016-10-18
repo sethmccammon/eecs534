@@ -34,12 +34,19 @@ def plotPriors():
     test_prediction = MultinomialPredict(test_tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_donald)
     multinomial_accuracies.append(BernoulliTest(test_prediction,test_tweets))
 
-
+  
+  plt.title('Alpha values vs. Accuracies for Bernoulli and Multinomial Models')
   alphas=[10.**-5.,10.**-4.,10.**-3.,10.**-2.,10.**-1.,10.**0.]
-  plt.semilogx(alphas,bernoulli_accuracies)
+  plt.semilogx(alphas,bernoulli_accuracies,'r-',label='bernoulli')
+  plt.semilogx(alphas,multinomial_accuracies,'b-',label='multinomial')
+
+  plt.xlabel('Alpha values')
+  plt.ylabel('Accuracies (as percentages)')
+  plt.legend()
   plt.show()
-  plt.semilogx(alphas,multinomial_accuracies)
-  plt.show()
+
+  # plt.semilogx(alphas,multinomial_accuracies)
+  # plt.show()
     #multiomial
     # file_class="train"
     # tweets, dictionary = parseTweets(file_class)

@@ -1,6 +1,6 @@
 import nltk, math, string
 from tweet import tweet, parseTweets
-from utils import dictionaryLookup
+from utils import dictionaryLookup, topTen
 from bernoulli import BernoulliModel, BernoulliPredict, BernoulliTest
 from multinomial import MultinomialModel, MultinomialPredict, MultinomialTest
 from plotVaryingPrior import plotPriors
@@ -21,7 +21,7 @@ def main():
   file_class="dev"
   test_tweets,test_dictionary=parseTweets(file_class)
   test_prediction = BernoulliPredict(test_tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_donald)
-  print "Test accuracy: ", BernoulliTest(test_prediction,test_tweets)
+  print "Overall testing accuracy (bernoulli): ", BernoulliTest(test_prediction,test_tweets)
 
   #multiomial
   file_class="train"
@@ -36,11 +36,17 @@ def main():
   file_class="dev"
   test_tweets,test_dictionary=parseTweets(file_class)
   test_prediction = MultinomialPredict(test_tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_donald)
-  print "Test accuracy: ", MultinomialTest(test_prediction,test_tweets)
+  print "Overall testing accuracy (multinomial) ", MultinomialTest(test_prediction,test_tweets)
+
+  topTen(probs_hillary, probs_donny)
 
   plotPriors()
   
   reduceFeatures()
+
+#TODO: Bsic implementation part 3
+#THIS IS OK Do counts have to be with respect to each candidate?
+
 
 
 

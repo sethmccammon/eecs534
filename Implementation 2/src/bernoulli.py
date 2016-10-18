@@ -36,6 +36,7 @@ def BernoulliModel(tweets, dictionary,alpha=1.):
 
 
   probs_hillary={}
+  # print sorted(dict_hillary.values(),reverse=True)[:15]
   for word in dictionary:
     probs_hillary[word] = dict_hillary[word]/num_clinton
   
@@ -47,7 +48,7 @@ def BernoulliModel(tweets, dictionary,alpha=1.):
 
 
 
-  return probs_donny, probs_hillary, p_hillary,p_donald
+  return probs_donny, probs_hillary, p_hillary,p_donald#, top_ten_donald, top_ten_hillary
 
 def BernoulliPredict(tweets,dictionary,probs_donny, probs_hillary, p_hillary,p_donald):
   res=[]

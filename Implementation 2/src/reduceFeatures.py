@@ -32,10 +32,20 @@ def reduceFeatures():
     # bernoulli_accuracies.append(BernoulliTest(test_prediction,test_tweets))
     accuracies.append(BernoulliTest(test_prediction,test_tweets))
     num_words.append(len(reduced_dictionary))
+
   plt.plot(range(0,16),accuracies)
+  plt.xlabel('Threshold as a varying multiplier')
+  plt.ylabel('Accuracy as a percentage')
+  plt.title('Varying threshold vs. accuracy')
   plt.show()
+
   plt.plot(range(0,16),num_words)
+  plt.xlabel('Threshold as a varying multiplier')
+  plt.ylabel('Number of words')
+  plt.title('Varying threshold vs. number of words')
   plt.show()
+
+  
 
 
 
