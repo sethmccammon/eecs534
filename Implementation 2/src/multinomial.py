@@ -1,5 +1,6 @@
 from utils import dictionaryLookup
 import math
+import numpy as np
 
 def MultinomialModel(tweets, dictionary,alpha=1.):
   #first we need to compute the probability of Hillary
@@ -92,6 +93,7 @@ def MultinomialTest(predicted_labels,tweets):
   count=0.
   confusion_mat = [[0,0],[0,0]]
   # print len(predicted_labels)
+  
   for i in range(len(predicted_labels)):
     if (predicted_labels[i]==tweets[i].label):
       count+=1.

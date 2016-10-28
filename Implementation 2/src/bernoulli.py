@@ -1,5 +1,6 @@
 from utils import dictionaryLookup
 import math
+import numpy as np
 
 def BernoulliModel(tweets, dictionary,alpha=1.):
   #first we need to compute the probability of Hillary
@@ -87,7 +88,7 @@ def BernoulliTest(predicted_labels,tweets):
 
 
   confusion_mat = [[0,0],[0,0]]
-
+  np.savetxt('clintontrump.predictions.dev',predicted_labels, delimiter='\n')
 
   for i in range(len(predicted_labels)):
     if (predicted_labels[i]==tweets[i].label):
