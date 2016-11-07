@@ -10,12 +10,35 @@ def bayesMultinomial(X, y):
   return clf
 
 def preprocessData(data, categories):
+  data_dict = {}
+
+
+
+
+
+  print "Len Data:", len(data)
+  for ii, d in enumerate(data):
+    try:
+      data_dict[d.occ_weekday, d.census_tract, categories[d.call_group]] += 1
+    except KeyError:
+      data_dict[d.occ_weekday, d.census_tract,categories[d.call_group]] = 1
+
+    
+
+    # if [d.occ_weekday, d.census_tract, categories[d.call_group]] in data_dict.keys():
+    #   data_dict[d.occ_weekday, d.census_tract, categories[d.call_group]] += 1
+    # else:
+    #   data_dict[d.occ_weekday, d.census_tract,categories[d.call_group]] = 1
+
+
+
+
   X = []
   y = []
-  for d in data:
-    #print d
-    X.append([d.occ_weekday, d.census_tract])
-    y.append(categories[d.call_group])
+  for d in data_dict:
+
+    X.append(list(d))
+    y.append(data_dict[d])
 
   return X, y
 

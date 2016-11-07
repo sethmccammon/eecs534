@@ -1,9 +1,9 @@
 import re, random
 from crime import crime
 
-def readData(filename):
+def readData(filename, crime_categories = {}):
   
-  crime_categories = {}
+
   with open(filename) as f:
     data = f.readlines()
 
