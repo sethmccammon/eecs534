@@ -1,10 +1,10 @@
-import math
+import math, random
 
 class decisionNode(object):
   """docstring for decisionNode"""
   def __init__(self, thresh, parameter, rhs_data, lhs_data, k):
 
-    print "Splitting on Paramter", parameter, "thresh =", thresh
+    #print "Splitting on Paramter", parameter, "thresh =", thresh
     self.type = 'decision'
 
     self.thresh = thresh 
@@ -21,12 +21,15 @@ class decisionNode(object):
 
 class leafNode(object):
   def __init__(self, val):
-    print "Leaf:", val
+    #print "Leaf:", val
     self.type = 'leaf'
     self.value = val
 
 
-def buildTree(data, k):
+def buildTree(data, k, num_samples = None):
+  if num_samples is None:
+    num_samples = len(data[0])-1
+
   labels = {}
   for d in data:
     try:
@@ -34,7 +37,7 @@ def buildTree(data, k):
     except KeyError:
       labels[d[-1]] = 1
   
-  if len(data) < k:
+  if len(data) <= k:
     max_count = 0
     max_key = 0
     for key in labels.keys():
@@ -46,18 +49,18 @@ def buildTree(data, k):
   elif len(labels) == 1:
     return leafNode(labels.keys()[0])
   else:
-    parameter, thresh = computeMaximalThresh(data)
+    parameter, thresh = computeMaximalThresh(data, num_samples)
     lhs_data, rhs_data = splitData(data, parameter, thresh)
     return decisionNode(thresh, parameter, rhs_data, lhs_data, k)
 
 
-def computeMaximalThresh(data):
+def computeMaximalThresh(data, num_samples):
 
   best_parameter = -1
   best_thresh = -1
   max_info_gain = -float('inf')
 
-  for parameter in range(len(data[0])-1):
+  for parameter in random.sample(range(len(data[0])-1), num_samples):
     for item in data:
       thresh = item[parameter]
 
@@ -113,12 +116,12 @@ def entropy(data):
   return -1 * res
 
 
-def predict(node, query):
+def predictTree(node, query):
   if node.type is not 'leaf':
     if query[node.parameter] > node.thresh:
-      return predict(node.rhs, query)
+      return predictTree(node.rhs, query)
     else:
-      return predict(node.lhs, query)
+      return predictTree(node.lhs, query)
   else:
     return node.value
 

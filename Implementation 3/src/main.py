@@ -1,35 +1,87 @@
 from utils import readData
-from decisionTree import *
-
+from decisionTree import buildTree, printTree, predictTree
+from randomForest import buildForest, predictForest
+import matplotlib.pyplot as plt
+import numpy as np
 
 def main():
   train_data = readData('../data/iris_train-1.csv')
   test_data = readData('../data/iris_test-1.csv')
-  k = 5
 
-  
+  step_size = 5
+  #Part 1
+  print "Single Tree"
+  x = range(1, len(train_data)+step_size, step_size)
+  y = []
+  for k in x:
+    tree = buildTree(train_data, k)
+    accuracy = computeAccuracy(test_data, tree, predictTree)
+    y.append(accuracy)
 
-  # d = [[0] for x in range(7)] + [[1] for x in range(26)]
-  
-  # d1 = [[0] for x in range(3)] + [[1] for x in range(21)]
-  # d2 = [[0] for x in range(4)] + [[1] for x in range(5)]
+  plt.figure()
+  plt.plot(x, y)
+  title = "Single Tree K value"
+  plt.title(title)
+  plt.xlabel("K")
+  plt.ylabel("% Accuracy")
+  plt.savefig("../results/"+title.replace(" ", "_")+".png")
+  #plt.show()
 
-  # print computeInfoGain(d, d1, d2)
-  tree = buildTree(train_data, k)
-  printTree(tree)
-  # print "Tree Constructed\n"
+  #Part 2
 
-  # correct = 0.0
-  # incorrect = 0.0
+  for l in [5, 10, 15, 20, 25, 30]:
+    print "Forest L", l
+    x = range(1, len(train_data)+step_size, step_size)
+    y = []
+    stdev = []
+    for k in x:
+      print "Tree K:", k
+      res = []
+      for trial in range(10):
+        print "Trial:", trial
+        forest = buildForest(train_data, l, k)
+        accuracy = computeAccuracy(test_data, forest, predictForest)
+        res.append(accuracy)
+      y.append(np.mean(res))
+      stdev.append(np.std(res))
+    plt.figure()
+    plt.errorbar(x, y, stdev)
+    title = "Forest K value - L = " + str(l)
+    plt.title(title)
+    plt.xlabel("K")
+    plt.ylabel("% Accuracy")
+    plt.savefig("../results/"+title.replace(" ", "_")+".png")
+  #   # plt.show()
+  # plt.show()
 
-  # for item in test_data:
-  #   y_hat = predict(tree, item)
-  #   if y_hat == item[-1]:
-  #     correct += 1
-  #   else:
-  #     incorrect += 1
+def computeAccuracy(test_data, test_item, predictionFunction):
+  correct = 0.0
+  incorrect = 0.0
 
-  # print correct/(correct+incorrect)
+  for item in test_data:
+    y_hat = predictionFunction(test_item, item)
+    if y_hat == item[-1]:
+      correct += 1
+    else:
+      incorrect += 1
+
+  return correct/(correct+incorrect)
+
+
+
+
+
+  # tree = buildTree(train_data, k)
+  # printTree(tree)
+
+
+
+
+
+  #print "Tree Constructed\n"
+
+
+
 
 if __name__ == '__main__':
   main()
