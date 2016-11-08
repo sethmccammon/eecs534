@@ -25,6 +25,8 @@ def main():
   plt.xlabel("K")
   plt.ylabel("% Accuracy")
   plt.savefig("../results/"+title.replace(" ", "_")+".png")
+  print "X:", x
+  print "Y:", y
   #plt.show()
 
   #Part 2
@@ -37,13 +39,16 @@ def main():
     for k in x:
       print "Tree K:", k
       res = []
-      for trial in range(10):
+      for trial in range(20):
         print "Trial:", trial
         forest = buildForest(train_data, l, k)
         accuracy = computeAccuracy(test_data, forest, predictForest)
         res.append(accuracy)
       y.append(np.mean(res))
       stdev.append(np.std(res))
+    print "X:", x
+    print "Y:", y
+    print "STDEV:", stdev
     plt.figure()
     plt.errorbar(x, y, stdev)
     title = "Forest K value - L = " + str(l)
@@ -66,21 +71,6 @@ def computeAccuracy(test_data, test_item, predictionFunction):
       incorrect += 1
 
   return correct/(correct+incorrect)
-
-
-
-
-
-  # tree = buildTree(train_data, k)
-  # printTree(tree)
-
-
-
-
-
-  #print "Tree Constructed\n"
-
-
 
 
 if __name__ == '__main__':
