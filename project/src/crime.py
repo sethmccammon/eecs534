@@ -9,7 +9,6 @@ class crime(object):
     self.case_desc = arg[3]
 
     date = arg[4].split('/')
-
     self.occ_date = datetime.date(int(date[2]), int(date[0]), int(date[1]))
     self.occ_weekday = self.occ_date.weekday()
     self.x_coordinate = int(arg[5])
@@ -18,6 +17,7 @@ class crime(object):
       self.census_tract = int(arg[7])
     else:
       self.census_tract = -1
+      
     
   def printCrime(self):
     print "Category:", self.category
