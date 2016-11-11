@@ -1,4 +1,5 @@
 import datetime
+from weatherData import weatherData
 
 class crime(object):
   """docstring for crime"""
@@ -30,3 +31,24 @@ class crime(object):
     print "Y Coordinate:", self.y_coordinate
     print "Census Tract", self.census_tract
 
+  def loadWeather(self, w):
+    self.max_temp = w.max_temp
+    self.min_temp = w.min_temp
+    self.mean_humidity = w.mean_humidity
+    self.mean_visibility = w.mean_visibility
+    self.mean_wind_speed = w.mean_wind_speed
+    self.max_gust_speed = w.max_gust_speed
+    self.precipitation = w.precipitation
+    self.cloud_cover = w.cloud_cover
+    self.events = w.events
+    
+  def printWeather( self ):
+    print "Max Temperature: " , self.max_temp # F
+    print "Min Temperature:" , self.min_temp # F
+    print "Mean Humidity:", self.mean_humidity  
+    print "Mean Visibility:", self.mean_visibility # miles
+    print "Mean Wind Speed:", self.mean_wind_speed # mph
+    print "Max Gust Speed:", self.max_gust_speed # mph
+    print "Precipitation:", self.precipitation # in
+    print "Cloud Cover:", self.cloud_cover
+    print "Events: ", self.events 
