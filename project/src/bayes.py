@@ -18,10 +18,11 @@ def preprocessData(data, categories):
 
   print "Len Data:", len(data)
   for ii, d in enumerate(data):
+    # print dir(d)
     try:
-      data_dict[d.occ_weekday, d.census_tract, categories[d.call_group]] += 1
+      data_dict[d.occ_weekday, d.binLocation, categories[d.call_group]] += 1
     except KeyError:
-      data_dict[d.occ_weekday, d.census_tract,categories[d.call_group]] = 1
+      data_dict[d.occ_weekday, d.binLocation,categories[d.call_group]] = 1
 
     
 

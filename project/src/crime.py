@@ -1,9 +1,13 @@
 import datetime
 from weatherData import weatherData
+from utils import binXY
 
 class crime(object):
   """docstring for crime"""
   def __init__(self, arg):
+
+
+
     self.category = arg[0]
     self.call_group = arg[1]
     self.final_case_type = arg[2]
@@ -18,6 +22,9 @@ class crime(object):
       self.census_tract = int(arg[7])
     else:
       self.census_tract = -1
+    self.binLocation=binXY(int(arg[5]),int(arg[6]))
+
+
       
     
   def printCrime(self):

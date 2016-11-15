@@ -26,19 +26,19 @@ def binXY(x_coor,y_coor):
     #********************
 
     num_bins=169
-    print "***************"
-    print x_coor,y_coor
-    print math.sqrt(num_bins)
+    # print "***************"
+    # print x_coor,y_coor
+    # print math.sqrt(num_bins)
     xedges=np.linspace(7547901,7728637,int(math.sqrt(num_bins)))
     yedges=np.linspace(602723,787863,int(math.sqrt(num_bins)))
-    print xedges 
-    print yedges
+    # print xedges 
+    # print yedges
     x=[x_coor]
     y=[y_coor]
     H, xedges, yedges = np.histogram2d(x,y, bins=(xedges, yedges))
-    print H
-    print np.where(H==1)
-    print np.argmax(H)
+    # print H
+    # print np.where(H==1)
+    # print np.argmax(H)
     return np.argmax(H)
 
 
