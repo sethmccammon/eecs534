@@ -20,4 +20,6 @@ def readData(filename, crime_categories = {}):
     if clean_line[7]:
       res.append(crime(clean_line))
   random.shuffle(res)
+
+  # print "***********\n",res[:],"***********"
   return res, crime_categories
