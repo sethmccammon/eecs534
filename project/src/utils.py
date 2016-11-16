@@ -25,7 +25,7 @@ def binXY(x_coor,y_coor):
     #Min => 7547902 602723 
     #********************
 
-    num_bins=169
+    num_bins=400
     # print "***************"
     # print x_coor,y_coor
     # print math.sqrt(num_bins)
@@ -37,9 +37,11 @@ def binXY(x_coor,y_coor):
     y=[y_coor]
     H, xedges, yedges = np.histogram2d(x,y, bins=(xedges, yedges))
     # print H
-    # print np.where(H==1)
+    xbin=np.where(H==1)[0][0]
+    ybin=np.where(H==1)[1][0]
     # print np.argmax(H)
-    return np.argmax(H)
+    # return np.argmax(H)
+    return xbin,ybin
 
 
 

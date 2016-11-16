@@ -22,7 +22,8 @@ class crime(object):
       self.census_tract = int(arg[7])
     else:
       self.census_tract = -1
-    self.binLocation=binXY(int(arg[5]),int(arg[6]))
+    self.xbin,self.ybin=binXY(int(arg[5]),int(arg[6]))
+
 
 
       
@@ -39,15 +40,18 @@ class crime(object):
     print "Census Tract", self.census_tract
 
   def loadWeather(self, w):
-    self.max_temp = w.max_temp
-    self.min_temp = w.min_temp
-    self.mean_humidity = w.mean_humidity
-    self.mean_visibility = w.mean_visibility
-    self.mean_wind_speed = w.mean_wind_speed
-    self.max_gust_speed = w.max_gust_speed
-    self.precipitation = w.precipitation
-    self.cloud_cover = w.cloud_cover
-    self.events = w.events
+    self.weather=w
+    # print w
+    # self.max_temp = w.max_temp
+    # self.min_temp = w.min_temp
+    # self.mean_humidity = w.mean_humidity
+    # self.mean_visibility = w.mean_visibility
+    # self.mean_wind_speed = w.mean_wind_speed
+    # self.max_gust_speed = w.max_gust_speed
+    # self.precipitation = w.precipitation
+    # self.cloud_cover = w.cloud_cover
+    # self.events = w.events
+    # if(w.maxtemp)
     
   def printWeather( self ):
     print "Max Temperature: " , self.max_temp # F

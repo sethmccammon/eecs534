@@ -16,7 +16,7 @@ def getWeatherData():
     data = f.readlines()
 
   print "len data: " , len(data[1:])
-  res = []
+  res = {}
   for line in data[1:]:
 
     clean_line = line.split(',')
@@ -27,7 +27,8 @@ def getWeatherData():
     if clean_line[21] not in weather_categories:
       weather_categories.append( clean_line[21] )
     
-    res.append(weatherData(clean_line))
+    w = weatherData(clean_line)
+    res[w.occ_date] = w
   return res, weather_categories
     
    

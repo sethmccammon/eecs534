@@ -10,6 +10,7 @@ from utils import dictCombine,binXY
 from plotData import plotData
 from getWeatherData import getWeatherData
 import math
+import numpy as np
 
 def main():
 		
@@ -19,7 +20,7 @@ def main():
 	print weather_categories
 	print "length weatherLog: " , len(weatherLog)
 
-	file_names = ['../data/NIJ2012_MAR01_DEC31.csv', '../data/NIJ2013_JAN01_DEC31.csv']#, '../data/NIJ2014_JAN01_DEC31.csv', '../data/NIJ2015_JAN01_DEC31.csv', '../data/NIJ2016_JAN01_JUL31.csv', '../data/NIJ2016_AUG01_AUG31.csv', '../data/NIJ2016_SEP01_SEP30.csv']
+	file_names = [ '../data/NIJ2012_MAR01_DEC31.csv', '../data/NIJ2013_JAN01_DEC31.csv', '../data/NIJ2014_JAN01_DEC31.csv', '../data/NIJ2015_JAN01_DEC31.csv', '../data/NIJ2016_JAN01_JUL31.csv', '../data/NIJ2016_AUG01_AUG31.csv', '../data/NIJ2016_SEP01_SEP30.csv']
 	crime_categories = {}
 	data = []
 
@@ -34,10 +35,7 @@ def main():
 	
 		
 	for d in data:
-		for w in weatherLog:
-			if d.occ_date == w.occ_date:
-				d.loadWeather( w )
-				break
+		d.loadWeather(weatherLog[d.occ_date])
 
 	print "data read."
 					
@@ -79,7 +77,7 @@ def main():
 	#test binXY
 	#Max => 7728636 787862 
     #Min => 7547902 602723 
-	# print binXY(7600000,690000)
+	print binXY(7600000,690000)
 
 
 
@@ -92,7 +90,19 @@ def main():
 	# data = readData('../data/NIJ2016_SEP01_SEP30.csv')
 	# print data[0][0]
 	X, y = preprocessData(data, crime_categories)
+	print X[0]
+
+	pred_arr=[]
 	model = bayesMultinomial(X, y)
+
+	for i in range(20):
+		for j in range(20):
+			pred_arr.append(model.predict([6,i,j,0,True])[0])
+
+	# pred_arr.reshape((20,20))
+	pred_arr=np.asarray(pred_arr)
+	pred_arr.reshape((20,20))
+	print pred_arr
 
 	# print len(crime_categories)
 	# print len( data )
