@@ -18,19 +18,18 @@ def dictCombine(d1, d2):
 
   return res
 
-def binXY(x_coor,y_coor):
+def binXY(x_coor,y_coor, num_xbins = 1, num_ybins = 1):
     #********************
     #Max x and y coordinate, to be used for binning:
     #Max => 7728636 787862 
     #Min => 7547902 602723 
     #********************
 
-    num_bins=400
     # print "***************"
     # print x_coor,y_coor
     # print math.sqrt(num_bins)
-    xedges=np.linspace(7547901,7728637,int(math.sqrt(num_bins)))
-    yedges=np.linspace(602723,787863,int(math.sqrt(num_bins)))
+    xedges=np.linspace(0,845,int(num_xbins))
+    yedges=np.linspace(0,697,int(num_ybins))
     # print xedges 
     # print yedges
     x=[x_coor]
@@ -45,3 +44,11 @@ def binXY(x_coor,y_coor):
 
 
 
+def checkCityLimits(x, y):
+  #print x, y
+  #raw_input()
+  if x < 734285.42 and x > 646331.8:
+    if y > 7599189.49 and y < 7702241.86:
+      return 1
+ 
+  return 0

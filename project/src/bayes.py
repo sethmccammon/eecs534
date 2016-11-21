@@ -21,9 +21,9 @@ def preprocessData(data, categories):
     # print dir(d)
 
     try:
-      data_dict[d.occ_weekday, d.xbin, d.ybin,categories[d.call_group],[d.weather.max_temp>65][0]] += 1
+      data_dict[d.occ_weekday, d.xbin, d.ybin, categories[d.call_group], [d.weather.max_temp>65][0]] += 1
     except KeyError:
-      data_dict[d.occ_weekday, d.xbin, d.ybin,categories[d.call_group],[d.weather.max_temp>65][0]] = 1
+      data_dict[d.occ_weekday, d.xbin, d.ybin, categories[d.call_group], [d.weather.max_temp>65][0]] = 1
 
     
 

@@ -1,6 +1,8 @@
 import datetime
 from weatherData import weatherData
 from utils import binXY
+from plotData import getPixelLoc
+
 
 class crime(object):
   """docstring for crime"""
@@ -22,7 +24,7 @@ class crime(object):
       self.census_tract = int(arg[7])
     else:
       self.census_tract = -1
-    self.xbin,self.ybin=binXY(int(arg[5]),int(arg[6]))
+    self.x_pixel, self.y_pixel = getPixelLoc(self.x_coordinate, self.y_coordinate)
 
 
 
