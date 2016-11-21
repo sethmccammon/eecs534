@@ -3,6 +3,19 @@ import matplotlib.pyplot as plt
 import cv2, math, operator
 import numpy as np
 
+
+  #2 miles = 85 pixels
+  #1 foot = 0.00804924242 pixels
+
+  #NW Corner AKA 0, 0
+  #730304.55
+  #7610837.17
+
+  #SE CORNER
+  #647920.61
+  #7687990.08
+
+
 def plotData(crimes, categories):
   hist = []
   for cat in categories:
@@ -54,16 +67,7 @@ def plotHeatmap(data, num_xbins = 100, num_ybins = 100):
   heatmap = cv2.addWeighted(base_img, 1-alpha, heatmap, alpha, 0)  
   cv2.imshow("asdas", heatmap)
   cv2.waitKey(0)
-  #2 miles = 85 pixels
-  #1 foot = 0.00804924242 pixels
 
-  #NW Corner AKA 0, 0
-  #730304.55
-  #7610837.17
-
-  #SE CORNER
-  #647920.61
-  #7687990.08
 
 
 
@@ -74,8 +78,3 @@ def getPixelLoc(x, y):
   x_offset = 5
   y_offset = -10
   return (int(x*0.00804924242)+x_offset, int(y*0.00804924242)+y_offset)
-
-
-
-  # 646331.8
-  # 7702241.86
