@@ -41,6 +41,8 @@ def plotData(crimes, categories):
         
 
 
+
+
 def plotHeatmap(data, num_xbins = 100, num_ybins = 100):
   base_img = cv2.imread('../data/portland.png')
   heatmap = np.ones(base_img.shape, dtype="uint8")
@@ -69,7 +71,28 @@ def plotHeatmap(data, num_xbins = 100, num_ybins = 100):
   cv2.waitKey(0)
 
 
+def prediction2heatmap(hist2d):
+  base_img = cv2.imread('../data/portland.png')
+  heatmap = np.ones(base_img.shape, dtype="uint8")
 
+  num_xbins, num_ybins = hist2d.shape
+
+  max_val = np.max(hist2d)
+  hist2d = hist2d/max_val 
+
+  x_bin_size = int(math.ceil(845.0/num_xbins))
+  y_bin_size = int(math.ceil(697.0/num_ybins))
+
+  for x in range(0, 845):
+    for y in range(0, 697):
+      xbin_id = x/x_bin_size
+      ybin_id = y/y_bin_size
+      color = (0, 0, 255*max(0, hist2d[xbin_id, ybin_id]))
+      heatmap[y, x] = color
+  alpha = .8
+  heatmap = cv2.addWeighted(base_img, 1-alpha, heatmap, alpha, 0)  
+  cv2.imshow("asdas", heatmap)
+  cv2.waitKey(0)
 
 def getPixelLoc(x, y):
   y = abs(y - 734285.42)

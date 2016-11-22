@@ -18,29 +18,14 @@ def dictCombine(d1, d2):
 
   return res
 
-def binXY(x_coor,y_coor, num_xbins = 1, num_ybins = 1):
-    #********************
-    #Max x and y coordinate, to be used for binning:
-    #Max => 7728636 787862 
-    #Min => 7547902 602723 
-    #********************
+def binXY(d, num_xbins, num_ybins):
+  x_bin_size = int(math.ceil(845.0/num_xbins))
+  y_bin_size = int(math.ceil(697.0/num_ybins))
 
-    # print "***************"
-    # print x_coor,y_coor
-    # print math.sqrt(num_bins)
-    xedges=np.linspace(0,845,int(num_xbins))
-    yedges=np.linspace(0,697,int(num_ybins))
-    # print xedges 
-    # print yedges
-    x=[x_coor]
-    y=[y_coor]
-    H, xedges, yedges = np.histogram2d(x,y, bins=(xedges, yedges))
-    # print H
-    xbin=np.where(H==1)[0][0]
-    ybin=np.where(H==1)[1][0]
-    # print np.argmax(H)
-    # return np.argmax(H)
-    return xbin,ybin
+  xbin_id = d.x_pixel/x_bin_size
+  ybin_id = d.y_pixel/y_bin_size
+
+  return xbin_id, ybin_id
 
 
 

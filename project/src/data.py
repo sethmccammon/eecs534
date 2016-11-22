@@ -20,8 +20,9 @@ def readData(filename, crime_categories = {}):
       crime_categories[clean_line[1]] = len(crime_categories)
       
     if clean_line[7]:
-      if checkCityLimits(float(clean_line[6]), float(clean_line[5])):
-        res.append(crime(clean_line))
+      new_crime = crime(clean_line)
+      if new_crime.x_pixel > 0 and new_crime.y_pixel > 0:
+        res.append(new_crime)
   random.shuffle(res)
 
   # print "***********\n",res[:],"***********"
