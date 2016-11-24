@@ -22,7 +22,8 @@ def readData(filename, crime_categories = {}):
     if clean_line[7]:
       new_crime = crime(clean_line)
       if new_crime.x_pixel > 0 and new_crime.y_pixel > 0:
-        res.append(new_crime)
+        if new_crime.x_pixel < 845 and new_crime.y_pixel < 697:
+          res.append(new_crime)
   random.shuffle(res)
 
   # print "***********\n",res[:],"***********"

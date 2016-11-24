@@ -37,3 +37,17 @@ def checkCityLimits(x, y):
       return 1
  
   return 0
+
+
+def heatmapError(h1, h2):
+  error = 0
+  num_xbins, num_ybins = h1.shape
+  for x_bin in range(num_xbins):
+    for y_bin in range(num_ybins):
+      error += (h1[x_bin, y_bin] - h2[x_bin, y_bin])**2
+
+  return error
+
+def normalizeHeatmap(h):
+  total = sum(sum(h))
+  return h/total

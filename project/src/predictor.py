@@ -2,7 +2,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.neural_network import MLPRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
 import numpy as np
-from utils import binXY
+from utils import binXY, normalizeHeatmap
 
 def bayesMultinomial(X, y):
 
@@ -33,7 +33,7 @@ def preprocessData(data, categories, num_xbins, num_ybins):
   for ii, d in enumerate(data):
     # print dir(d)
     x_bin, y_bin = binXY(d, num_xbins, num_ybins) 
-    key = (x_bin, y_bin, categories[d.call_group])#, d.occ_weekday, categories[d.call_group], int([d.weather.max_temp>65][0]))
+    key = (x_bin, y_bin)#, categories[d.call_group], d.occ_weekday)#, d.occ_weekday, categories[d.call_group], int([d.weather.max_temp>65][0]))
     try:
       data_dict[key] += 1
     except KeyError:
@@ -64,6 +64,6 @@ def predictBayesMultinomialMap(params, model, num_xbins, num_ybins):
     for y_bin in range(num_ybins):
       x = np.asarray([x_bin, y_bin] + params)
       x = x.reshape(1, -1)
-      res[x_bin, y_bin] = model.predict(x)
+      res[x_bin, y_bin] = max(0, model.predict(x))
 
-  return res
+  return normalizeHeatmap(res)
