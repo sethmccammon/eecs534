@@ -8,7 +8,7 @@ from data import readData, augmentData, getWeatherData
 from predictor import GP, bayesMultinomial, preprocessData, predictBayesMultinomialMap, neuralNet
 from utils import dictCombine,binXY, heatmapError
 from plotData import plotData, drawHeatmap, buildHeatmap
-import math
+import math, random
 import numpy as np
 
 def main():
@@ -30,6 +30,7 @@ def main():
     new_data, crime_categories = readData(filename, crime_categories)
     data = data + new_data
     print len(data)
+  random.shuffle(data)
 
   print crime_categories
   print "Done Reading Crime Data"
