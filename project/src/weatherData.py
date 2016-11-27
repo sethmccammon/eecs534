@@ -12,6 +12,7 @@ class weatherData(object):
   def __init__(self, arg):
     date = arg[0].split('-')
     self.occ_date = datetime.date(int(date[0]), int(date[1]), int(date[2]))
+    
     self.max_temp = int(arg[1])
     self.min_temp = int(arg[2])
     # self.mean_humidity = int(arg[8])
