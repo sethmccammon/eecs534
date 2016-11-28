@@ -33,7 +33,7 @@ def preprocessData(data, categories, num_xbins, num_ybins):
   for ii, d in enumerate(data):
     # print dir(d)
     x_bin, y_bin = binXY(d, num_xbins, num_ybins) 
-    key = (x_bin, y_bin)#, d.occ_weekday)#int(d.weather.precipitation>0.089))#int([d.weather.max_temp>65][0]))#categories[d.call_group])#, d.occ_weekday, categories[d.call_group])
+    key = (x_bin, y_bin,categories[d.call_group])#, d.occ_weekday)#int(d.weather.precipitation>0.089))#int([d.weather.max_temp>65][0]))##, d.occ_weekday, categories[d.call_group])
     try:
       data_dict[key] += 1
     except KeyError:
